@@ -78,6 +78,10 @@ void Core::loadMysqlConfig() {
         Error = CONFIG_MYSQL_TABLE_LOST;
         error_handle();
     }
+    if(!readConfigFile(Opt->config_file,"mysql_port",GLOBAL->mysql_port)){
+        Error = CONFIG_MYSQL_TABLE_LOST;
+        error_handle();
+    }
 }
 
 
@@ -115,12 +119,15 @@ bool Core::readConfigFile(std::string cfgfilepath, const std::string & key, std:
 }
 
 Core::Core(struct Options *Opt,struct globalSet * GLOBAL) {
-    std::cout << "Loading ..." << std::endl;
+    if(GLOBAL->debug){
+        std::cout << "[*]加载设置……" << std::endl;
+    }
     this->Opt = Opt;
     this->GLOBAL = GLOBAL;
-    //loadMysqlConfig();
-    //readDict();
-    std::cout << "Loading Options Success !" << std::endl;
+    if(GLOBAL->debug){
+        std::cout << "[*]加载成功……" << std::endl;
+    }
+
 }
 
 bool Core::readDict() {
@@ -134,8 +141,14 @@ bool Core::readDict() {
         getline(IO,line);
         line += "." + Opt->domain;
         dicLists.push_back(line);
-        std::cout << "[*] " << line << std::endl;
+        if(GLOBAL->debug){
+            std::cout << "[*] " << line << std::endl;
+        }
+
     }
     IO.close();
-    std::cout << "Load dict Success !" << std::endl;
+    if(GLOBAL->debug){
+        std::cout << "加载字典成功！" << std::endl;
+    }
+
 }

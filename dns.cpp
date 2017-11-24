@@ -25,7 +25,7 @@ bool DNS::Enum(struct Options * Opt,struct globalSet * GLOBAL,std::vector <std::
             rr = ldns_rr_list_rr(info, i);
             rr_rdf = ldns_rr_rdf(rr, 0);
             if (inet_ntop(AF_INET, ldns_rdf_data(rr_rdf), str, sizeof(str))) {
-                printf("[*]%s -> %s \n", str,it->c_str());
+                std::cout << "[*]"  << str << "\t" << it->c_str() << std::endl;
                 std::string iphost = str;
                 std::string domain = "'"+*it+"'";
                 std::string md51 = "md5('" + iphost + *it + "')";

@@ -60,7 +60,7 @@ std::string MySQL_Controller::Escape(std::string str) { // escape attack string
 
 int MySQL_Controller::exec(std::string sql) {
     int code = 0;
-    if((code =mysql_query(sqler,sql.c_str())) != 0){
+    if((code =mysql_query(sqler,sql.c_str())) != 0 && debug){
         std::cout << "[Error] :" << mysql_error(sqler) << std::endl;
         std::cout << "[SQL] :" << sql << std::endl;
         return -1;
@@ -97,15 +97,16 @@ int MySQL_Controller::Insert(std::string tableName, std::vector<std::string> col
         }
         sql+= "'"+Escape(data[j])+"',";
     }
-    if(debug){
-        std::cout <<"[+]SQL : " <<sql << std::endl;
-    }
-    if((code =mysql_query(sqler,sql.c_str())) != 0){
+    if((code =mysql_query(sqler,sql.c_str())) != 0 && debug){
         std::cout << "[Error] :" << mysql_error(sqler) << std::endl;
         std::cout << "[SQL] :" << sql << std::endl;
         return -1;
     }
-    std::cout << "Insert ID:" << mysql_insert_id(sqler) << std::endl;
+    if(debug){
+        std::cout << "Insert ID:" << mysql_insert_id(sqler) << std::endl;
+        std::cout <<"[+]SQL : " <<sql << std::endl;
+    }
+
     return code;
 }
 
@@ -139,7 +140,7 @@ int MySQL_Controller::real_Insert(std::string tableName, std::vector<std::string
         }
         sql+= data[j]+",";
     }
-    if((code =mysql_query(sqler,sql.c_str())) != 0){
+    if((code =mysql_query(sqler,sql.c_str())) != 0 && debug){
         std::cout << "[Error] :" << mysql_error(sqler) << std::endl;
         std::cout << "[SQL] :" << sql << std::endl;
         return -1;
@@ -154,12 +155,9 @@ int MySQL_Controller::real_Insert(std::string tableName, std::vector<std::string
 bool MySQL_Controller::connect(std::string host, std::string user, std::string pass, std::string database,
                                short int port) {
     sqler = mysql_init(NULL);
-    debug = true;
-    connected = false;
     if(!mysql_real_connect(sqler,host.c_str(),user.c_str(),pass.c_str(),database.c_str(),port,NULL,0)){
         //if(!mysql_real_connect(sqler,"127.0.0.1","root","root","test",3306,NULL,0)){
         std::cout << mysql_error(sqler)<< std::endl;
-        connected= false;
         //this->~MySQL_Controller();
         mysql_close(sqler);
         return false;

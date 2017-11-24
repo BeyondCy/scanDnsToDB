@@ -8,9 +8,16 @@
 #define VERSION 0.11
 #define CREATE_TIME 20171123
 void help(char * argv[]){
-    std::cout << "Usage:" << argv[0] << " -d<target domain> -t<thread counts> -r<dict path>" << std::endl;
-    std::cout << "Example:" << argv[0] << " -dshadowteam.online -t5 -rsubnames.txt" << std::endl;
-    std::cout << "Create :" << CREATE_TIME << std::endl;
+    std::cout << "例子：" << argv[0] << " -dpayloads.online -t5 -rsubnames.txt" << std::endl;
+    std::cout << "-d[你要枚举的域名]" << std::endl;
+    std::cout << "-s[制定DNS服务器地址](默认是202.101.172.35)" << std::endl;
+    std::cout << "-c[配置文件路径](默认是当前目录中的my.ini)" << std::endl;
+    std::cout << "-r[字典路径](默认在my.ini中)" << std::endl;
+    std::cout << "-u 开启调试模式(无需参数)" << std::endl;
+    std::cout << "-t[线程数]" << std::endl;
+    std::cout << "-v 输出版本信息" << std::endl;
+    std::cout << "-h 输出帮助信息" << std::endl;
+    std::cout << "创建日期:\t" << CREATE_TIME << std::endl;
 }
 int main(int argc,char * argv[]) {
     // v version
@@ -37,7 +44,8 @@ int main(int argc,char * argv[]) {
         switch (option){
             case 'v':
                 std::cout << argv[0] << "  [Version " << VERSION  << "] by payloads "<< std::endl;
-                std::cout <<"Email : " << " payloads@aliyun.com "<< std::endl;
+                std::cout <<"Email  : " << "\tpayloads@aliyun.com "<< std::endl;
+                std::cout <<"Author : " << "\t倾旋 "<< std::endl;
                 exit(0);
             case 'd':
                 if(optarg==NULL){
@@ -94,14 +102,14 @@ int main(int argc,char * argv[]) {
                 exit(EXIT_SUCCESS);
         }
     }
-    if(optind < 2){
+    if(optind < 3){
         help(argv);
         exit(EXIT_FAILURE);
     }
     MySQL_Controller  controller;
-    controller.debug = true;
+    controller.debug = GLOBAL.debug;
     CoreEngine.loadMysqlConfig();
-    if(!controller.connect(GLOBAL.mysql_host,GLOBAL.mysql_user,GLOBAL.mysql_pass,GLOBAL.mysql_database,3306)){
+    if(!controller.connect(GLOBAL.mysql_host,GLOBAL.mysql_user,GLOBAL.mysql_pass,GLOBAL.mysql_database,atoi(GLOBAL.mysql_port.c_str()))){
         CoreEngine.Error=MYSQL_CANT_CONNECT;
         CoreEngine.error_handle();
     }

@@ -24,6 +24,7 @@ struct globalSet{
     std::string mysql_pass;
     std::string mysql_database;
     std::string mysql_table;
+    std::string mysql_port;
     std::string ext_file;
     bool debug;
 };

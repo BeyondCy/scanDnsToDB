@@ -14,7 +14,6 @@ public:
         data
     }Type;
     bool debug;
-    bool connected;
     //MySQL_Controller(std::string host,std::string user,std::string pass,std::string database,short int port);
     bool connect(std::string host,std::string user,std::string pass,std::string database,short int port);
     MYSQL_RES * Select(std::string sql);
