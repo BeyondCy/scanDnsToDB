@@ -10,7 +10,15 @@
 
 注意事项：你的Kali Linux必须确保已经更新了源，并且开启了MySQL服务(已经自带了)，以及安装了gcc/g++
 
+建议安装的时候先将其他源注释，采用官方源:`deb http://http.kali.org/kali kali-rolling main non-free contrib`
+
 启动MySQL:`service mysql start`
+
+将domain.sql在数据库中执行
+
+`mysql -u root -p test < domain.sql`
+
+若提示失败，可能是你的test数据库未被创建
 
 ## 参数介绍
 ```
@@ -28,21 +36,6 @@
 以上帮助都可以通过`-h`参数获得到
 
 ## 关于配置文件
-
-首先要创建一个(MySQL)数据库以及数据表：
-
-```
-DROP TABLE IF EXISTS `domain`;
-CREATE TABLE `domain` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `md51` char(32) NOT NULL,
-  `domain` varchar(255) NOT NULL,
-  `ip` varchar(255) NOT NULL,
-  `md52` char(32) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `md51` (`md51`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
-```
 
 `my.ini`是配置文件
 
