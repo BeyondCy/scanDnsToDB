@@ -43,6 +43,9 @@ std::string Core::error_handle() {
             case CANT_READ_DICT:
                 std::cout<< "DICT file can't read."<< std::endl;
                 exit(EXIT_FAILURE);
+            case PORTS_LOST:
+                std::cout<< "Can't read port from config file."<< std::endl;
+                exit(EXIT_FAILURE);
             default:
                 std::cout<< "Unkown Error. Please contact my  [Email:payloads@aliyun.com]"<< std::endl;
                 exit(EXIT_FAILURE);

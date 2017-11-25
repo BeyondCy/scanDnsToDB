@@ -18,6 +18,7 @@ typedef enum {
     NOT_GIVE_DOMAIN,
     NOT_GIVE_DOMAIN_DICT,
     CANT_READ_DICT,
+    PORTS_LOST,
     UNKNOWN_ERROR
 }SomeError;
 #endif //UNTITLED2_ERROR_H
