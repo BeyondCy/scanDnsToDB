@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
-project(untitled2)
-
+project(newScanDnsToDB)
 set(CMAKE_CXX_STANDARD 11)
-
-set(SOURCE_FILES main.cpp mysql_controller.h mysql_controller.cpp some_error.h core.h core.cpp global.h dns.h dns.cpp httpController.cpp httpController.h scanNet.cpp scanNet.h)
-add_executable(untitled2 ${SOURCE_FILES})
-TARGET_LINK_LIBRARIES(untitled2 mysqlclient ldns)
+set(SOURCE_FILES main.cpp SourceFile/mysql_class.cpp HeaderFile/mysql_class.h HeaderFile/controller_class.h SourceFile/controller_class.cpp HeaderFile/global.h HeaderFile/dns_class.h SourceFile/dns_class.cpp SourceFile/dns_class.h)
+add_executable(newScanDnsToDB ${SOURCE_FILES})
+TARGET_LINK_LIBRARIES(newScanDnsToDB mysqlclient ldns)
